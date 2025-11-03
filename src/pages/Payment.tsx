@@ -40,9 +40,14 @@ const Payment = () => {
 
     setTimeout(async () => {
       try {
+
+        console.log("🟦 Starting payment for booking:", booking);
+
         // Confirm booking in backend
         const updatedBooking = await confirmBookingPayment(booking.id);
         toast.success("Payment successful!");
+
+        console.log("➡️ Navigating to /confirmation ...");
 
         navigate("/confirmation", {
           state: {
