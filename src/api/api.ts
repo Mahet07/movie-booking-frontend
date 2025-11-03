@@ -147,8 +147,23 @@ export const createBooking = async (bookingData: any) => {
 export const getBookingsByUser = async (userId: number) =>
   (await apiClient.get(`${BOOKING_API_URL}/user/${userId}`)).data;
 
-export const confirmBookingPayment = async (bookingId: number) =>
-  (await apiClient.put(`${BOOKING_API_URL}/${bookingId}/confirm`)).data;
+export const confirmBookingPayment = async (bookingId: number) => {
+  const token = localStorage.getItem("token"); // ✅ JWT from login
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/bookings/${bookingId}/confirm`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`, // ✅ send token
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Payment confirmation failed: ${response.statusText}`);
+  }
+
+  return await response.json();
+};
+
 
 // ---------- WebSocket ----------
 /**
