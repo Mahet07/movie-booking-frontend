@@ -176,8 +176,7 @@ export const connectSeatWebSocket = (
   showId: number,
   onMessage: (data: any) => void
 ): Client => {
-  const socketBaseUrl = import.meta.env.VITE_API_BASE_URL?.replace("/api", "") || "http://localhost:8080";
-const socketUrl = socketBaseUrl.replace(/^http/, "ws") + "/ws";
+  const socketUrl = `${import.meta.env.VITE_API_BASE_URL.replace('/api', '')}/ws`;
  // Must match backend endpoint
   const socket = new SockJS(socketUrl);
 
