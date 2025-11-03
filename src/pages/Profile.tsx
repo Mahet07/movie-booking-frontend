@@ -8,7 +8,8 @@ import { User, Mail, Phone, Calendar, Ticket } from "lucide-react";
 import axios from "axios";
 
 // ✅ API Base URL
-const PROFILE_API_URL = "http://localhost:8080/api/profile";
+const PROFILE_API_URL = `${import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api"}/profile`;
+
 
 // ----------------------
 // TypeScript Interfaces
