@@ -32,41 +32,29 @@ const Payment = () => {
     }
   }, [booking, navigate]);
 
-  const handlePayment = async () => {
-    if (!booking) return;
+const handlePayment = async () => {
+  try {
+    console.log("🟦 Starting payment for booking:", booking);
 
-    setLoading(true);
-    toast.info("Processing your payment...");
+    if (!booking?.id) {
+      console.error("❌ No booking ID found, cannot process payment");
+      return;
+    }
 
-    setTimeout(async () => {
-      try {
+    // Confirm payment with backend
+    const confirmed = await confirmBookingPayment(booking.id);
 
-        console.log("🟦 Starting payment for booking:", booking);
+    console.log("🟩 Payment confirmed. Booking response:", confirmed);
 
-        // Confirm booking in backend
-        const updatedBooking = await confirmBookingPayment(booking.id);
-        toast.success("Payment successful!");
+    // ✅ Redirect to confirmation page with booking data
+    navigate("/confirmation", { state: { booking: confirmed } });
 
-        console.log("➡️ Navigating to /confirmation ...");
+  } catch (error) {
+    console.error("❌ Payment failed:", error);
+    alert("Payment failed. Please try again.");
+  }
+};
 
-        navigate("/confirmation", {
-          state: {
-            booking: updatedBooking,
-            show,
-            movie,
-            theater,
-            selectedSeats,
-            totalAmount,
-          },
-        });
-      } catch (error) {
-        console.error("Error confirming payment:", error);
-        toast.error("Payment failed. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    }, 1500);
-  };
 
   if (!booking) return null;
 
