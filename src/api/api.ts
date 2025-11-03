@@ -4,7 +4,7 @@ import SockJS from "sockjs-client";
 import { Client, IMessage } from "@stomp/stompjs";
 
 // ---------- API Base URLs ----------
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 const AUTH_API_URL = `${API_BASE_URL}/auth`;
 export const MOVIE_API_URL = `${API_BASE_URL}/movies`;
 export const SHOW_API_URL = `${API_BASE_URL}/shows`;

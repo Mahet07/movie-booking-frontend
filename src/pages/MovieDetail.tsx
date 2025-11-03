@@ -24,7 +24,7 @@ const MovieDetail = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const IMAGE_BASE_URL = "http://localhost:8080/uploads/movies/";
+  const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || "http://localhost:8080/uploads/movies/";
 
   useEffect(() => {
     const fetchData = async () => {
