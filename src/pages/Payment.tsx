@@ -41,19 +41,31 @@ const handlePayment = async () => {
       return;
     }
 
+    setLoading(true);
+
     // Confirm payment with backend
     const confirmed = await confirmBookingPayment(booking.id);
-
     console.log("🟩 Payment confirmed. Booking response:", confirmed);
 
-    // ✅ Redirect to confirmation page with booking data
-    navigate("/confirmation", { state: { booking: confirmed } });
-
+    // ✅ Pass all details to confirmation
+    navigate("/confirmation", {
+      state: {
+        booking: confirmed,
+        show,
+        movie,
+        theater,
+        selectedSeats,
+        totalAmount,
+      },
+    });
   } catch (error) {
     console.error("❌ Payment failed:", error);
     alert("Payment failed. Please try again.");
+  } finally {
+    setLoading(false);
   }
 };
+
 
 
   if (!booking) return null;
